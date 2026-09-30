@@ -27,16 +27,6 @@
 
 ---
 
-## 🌐 Live Demo
-
-Once deployed (see [publishing](#-publishing-to-github--github-pages)), the web edition runs
-directly on **GitHub Pages**:
-
-> **`https://<your-username>.github.io/floorplan-3d/`**
-
-The included workflow (`.github/workflows/deploy-pages.yml`) deploys it automatically on
-every push to `main` — zero configuration, zero build.
-
 ## 📸 Screenshots
 
 | 2D Plan Editor | 3D Scene |
@@ -189,17 +179,6 @@ npm run smoke        # headless smoke test (renders the app, probes the API brid
 Editing `public/floorplan.html` is all you ever need — `sync-app.mjs` (run automatically by
 every script) copies it into the Electron shell.
 
-## 📤 Publishing to GitHub & GitHub Pages
-
-1. Create an empty repository on [github.com/new](https://github.com/new)
-2. Double-click **`publish-to-github.bat`**, paste your repository URL — done
-3. Enable Pages: **Settings → Pages → Source: GitHub Actions**
-4. Your live site: `https://<your-username>.github.io/floorplan-3d/`
-   *(update the Live Demo link above with your username)*
-
-Optional: upload `docs/brand/social-preview.jpg` in **Settings → Social preview** so shared
-links show the branded card.
-
 ## 🛠️ Troubleshooting
 
 | Problem | Solution |
@@ -227,4 +206,4 @@ Built with [Three.js](https://threejs.org/) (r160, vendored) and
 
 ## 📄 License
 
-Released under the [MIT License](LICENSE) — © 2025 Hazhir. Free to use, modify and share.
+Released under the [MIT License](LICENSE) — © 2026 Hazhir. Free to use, modify and share.
