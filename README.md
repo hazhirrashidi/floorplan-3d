@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/brand/banner.jpg" alt="Floor Plan 3D — by Hazhir" width="100%" />
+  <img src="docs/banner.jpg" alt="Floor Plan 3D — by Hazhir" width="100%" />
 </p>
 
 <h1 align="center">Floor Plan 3D</h1>
