@@ -1,0 +1,69 @@
+{
+  "name": "floorplan-3d-desktop",
+  "productName": "Floor Plan 3D",
+  "version": "1.0.0",
+  "description": "Floor Plan 3D — offline desktop app for 2D/3D interior design (Electron edition)",
+  "main": "src/main.js",
+  "author": "Hazhir",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "sync": "node scripts/sync-app.mjs",
+    "start": "npm run sync && electron .",
+    "dist": "npm run sync && node scripts/fix-wincodesign-cache.mjs && electron-builder --win",
+    "dist:dir": "npm run sync && node scripts/fix-wincodesign-cache.mjs && electron-builder --win --dir",
+    "dist:noedit": "npm run sync && electron-builder --win --config.win.signAndEditExecutable=false",
+    "smoke": "npm run sync && node scripts/smoke.mjs"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.hazhir.floorplan3d",
+    "productName": "Floor Plan 3D",
+    "copyright": "Copyright © 2025 Hazhir",
+    "asar": true,
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**/*",
+      "app/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Floor Plan 3D",
+      "artifactName": "FloorPlan3D-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "FloorPlan3D-Portable-${version}.${ext}"
+    }
+  },
+  "allowScripts": {
+    "electron@33.4.11": true
+  }
+}

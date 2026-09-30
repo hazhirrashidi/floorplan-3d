@@ -1,0 +1,39 @@
+# Builds the Windows desktop app (installer + portable exe) automatically.
+# Trigger: push a version tag (v1.0.1, v2.0, ...) or run manually from the Actions tab.
+# The .exe artifacts appear under the run's "Artifacts" section — no Windows machine needed.
+name: Build Windows Desktop App
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: desktop
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Build installer + portable exe
+        run: npm run dist
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: FloorPlan3D-Windows-x64
+          path: |
+            desktop/dist/FloorPlan3D-Setup-*.exe
+            desktop/dist/FloorPlan3D-Portable-*.exe
+          if-no-files-found: error
