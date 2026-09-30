@@ -1,0 +1,60 @@
+# Deploys the web edition of Floor Plan 3D to GitHub Pages.
+#
+# The app is a zero-build static site (public/floorplan.html + vendored Three.js),
+# so deployment simply assembles those files into a site root where the plan
+# is served as index.html.
+#
+# All actions below target Node.js 24 and the runner is pinned to
+# ubuntu-24.04, so the build stays free of deprecation warnings.
+#
+# One-time setup: after the first successful run, go to
+# Settings → Pages and make sure "Source" is "GitHub Actions"
+# (the workflow enables this automatically when possible).
+#
+# Your app will be live at:  https://<your-username>.github.io/<repo-name>/
+name: Deploy Web App to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v6
+        with:
+          enablement: true
+
+      - name: Assemble site
+        run: |
+          mkdir -p _site
+          cp public/floorplan.html _site/index.html
+          cp -r public/vendor    _site/vendor
+          cp public/robots.txt   _site/robots.txt
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
