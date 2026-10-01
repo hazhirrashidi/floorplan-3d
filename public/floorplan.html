@@ -860,7 +860,7 @@ function overviewPanel(){
   ROOMS.forEach(r => { const m = state.rooms[r.id].mat; byMat[m] = (byMat[m]||0) + area(r.poly); });
   let cost = 0;
   const matRows = Object.entries(byMat).map(([m,a]) => { const c = a*MATS[m].price*1.05; cost += c;
-    return `<tr><td><span class="sw" style="background:${MATS[m].sw}"></span>${MATS[m].name}</td><td class="r">${fmt(a,1)} m²</td><td class="r">¥${Math.round(c).toLocaleString()}</td></tr>`; }).join('');
+    return `<tr><td><span class="sw" style="background:${MATS[m].sw}"></span>${MATS[m].name}</td><td class="r">${fmt(a,1)} m²</td><td class="r">${Math.round(c).toLocaleString()}</td></tr>`; }).join('');
   const dem = state.demolished.map(id => WALLS[+id.slice(1)]);
   const demLen = dem.reduce((a,w) => a + Math.max(w[2]-w[0], w[3]-w[1]), 0) / 1000;
   return `
@@ -870,7 +870,7 @@ function overviewPanel(){
     <div class="muted" style="font-size:11px;margin-top:4px">* Bay windows are excluded; areas use net inner wall dimensions</div></section>
   <section><h3>Flooring Estimate <small>incl. 5% waste</small></h3>
     <table>${matRows}</table>
-    <div class="total"><span>Flooring total</span><b>¥${Math.round(cost).toLocaleString()}</b></div></section>
+    <div class="total"><span>Flooring total</span><b>${Math.round(cost).toLocaleString()}</b></div></section>
   <section><h3>Plan Stats</h3>
     <div class="stats"><div><small>Furniture</small><span class="big">${state.furniture.length}</span></div>
       <div><small>Walls removed</small><span class="big">${fmt(demLen,1)}</span> m</div></div>
@@ -951,7 +951,7 @@ function closeDrawers(){ if (narrow()) drawer(null); }
 
 function roomPanel(r){
   const st = state.rooms[r.id], a = area(r.poly), [x0,y0,x1,y1] = bbox(r.poly), inside = state.furniture.filter(f => f.cx>x0&&f.cx<x1&&f.cy>y0&&f.cy<y1);
-  const mats = Object.entries(MATS).map(([k,m]) => `<button class="mat ${k===st.mat?'on':''}" data-mat="${k}"><i style="background:${m.sw}"></i><span>${m.name}<small>¥${m.price}/m²</small></span></button>`).join('');
+  const mats = Object.entries(MATS).map(([k,m]) => `<button class="mat ${k===st.mat?'on':''}" data-mat="${k}"><i style="background:${m.sw}"></i><span>${m.name}<small>${m.price}/m²</small></span></button>`).join('');
   return `<section><h3>Room</h3>
     <div class="form"><label class="full">Name<input id="rName" value="${esc(st.name)}"></label></div>
     <div class="stats" style="margin-top:10px">
